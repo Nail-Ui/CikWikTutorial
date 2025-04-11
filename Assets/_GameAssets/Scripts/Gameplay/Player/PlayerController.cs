@@ -28,12 +28,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _playerHeight;
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private float _groundDrag;
+    
+    
     private Rigidbody _playerRigidBody;
     private float _horizontalInput, _verticalInput;
     private bool _isSliding;
 
     private Vector3 _movementDirection;
 
+    
     private void Awake()
     {
         _playerRigidBody = GetComponent<Rigidbody>();
