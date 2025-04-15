@@ -1,3 +1,4 @@
+using System;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.Rendering;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    public event Action OnplayerJumped;
+    
     [Header("References")]
     [SerializeField] private Transform _orientationTransform;
     
@@ -45,6 +48,8 @@ public class PlayerController : MonoBehaviour
         _playerRigidBody = GetComponent<Rigidbody>();
         _playerRigidBody.freezeRotation = true;
     }
+
+    
 
     private void Update()
     {
@@ -151,6 +156,13 @@ public class PlayerController : MonoBehaviour
 
     private void SetPlayerJumping()
     {
+        // if(OnplayerJumped != null)
+        // {
+        //   OnplayerJumped.Invoke();
+
+        // } OnPlayerJumped Null değilse bu işlemi yap demek oluyor 157. ve 163'ncü satırda olan code'lar
+
+        OnplayerJumped?.Invoke();
         _playerRigidBody.linearVelocity = new Vector3(_playerRigidBody.linearVelocity.x, 0f, _playerRigidBody.linearVelocity.z);
         _playerRigidBody.AddForce(transform.up * _jumpForce, ForceMode.Impulse);
     }
