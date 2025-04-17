@@ -19,9 +19,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private KeyCode _jumpKey;
     [SerializeField] private float _jumpForce;
     [SerializeField] private float _jumpCooldown;
-    [SerializeField] private bool _canJump;
     [SerializeField] private float _airMultiplier;
     [SerializeField] private float _airDrag;
+    [SerializeField] private bool _canJump;
     
     [Header("Sliding Settings")]
     [SerializeField] private KeyCode _slideKey;
@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private float _groundDrag;
     
+
+    private float _startingMovementSpeed, _startingJumpForce;
     private StateController _stateController;
     private Rigidbody _playerRigidBody;
     private float _horizontalInput, _verticalInput;
@@ -47,6 +49,8 @@ public class PlayerController : MonoBehaviour
         _stateController = GetComponent<StateController>();
         _playerRigidBody = GetComponent<Rigidbody>();
         _playerRigidBody.freezeRotation = true;
+        _startingMovementSpeed = _movementSpeed;
+        _startingJumpForce = _jumpForce;
     }
 
     
@@ -166,7 +170,8 @@ public class PlayerController : MonoBehaviour
         _playerRigidBody.linearVelocity = new Vector3(_playerRigidBody.linearVelocity.x, 0f, _playerRigidBody.linearVelocity.z);
         _playerRigidBody.AddForce(transform.up * _jumpForce, ForceMode.Impulse);
     }
-
+    #region Helper Functions
+    
     private bool IsGrounded()
     {
         return Physics.Raycast(transform.position, Vector3.down, _playerHeight * 0.5f + 0.2f, _groundLayer);
@@ -180,4 +185,35 @@ public class PlayerController : MonoBehaviour
     {
         return _isSliding;
     }
+    public void SetMovementSpeed(float speed, float duration)
+    {
+        _movementSpeed += speed;
+        Invoke(nameof(ResetMovementSpeed), duration);
+    }
+    
+
+    private void ResetMovementSpeed()
+    {
+        _movementSpeed = _startingMovementSpeed;
+
+    }
+
+    public void SetJumpForce(float force, float duration)
+    {
+        _jumpForce += force;
+        Invoke(nameof(ResetJumpForce), duration);
+    }
+
+    private void ResetJumpForce()
+    {
+        _jumpForce = _startingJumpForce;
+    }
+
+
+
+    #endregion
+
+
+
+
 }
