@@ -4,8 +4,8 @@ public class HolyWheatCollectible : MonoBehaviour, ICollectible
 {
    [SerializeField] private WheatDesignSO _wheatDesignSO;
    [SerializeField] private PlayerController _playerController;
-   [SerializeField] private float _forceIncrease;
-   [SerializeField] private float _resetBoostDuration;
+   // [SerializeField] private float _forceIncrease;
+   // [SerializeField] private float _resetBoostDuration;
 
 
    public void Collect()
