@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RottenWheatCollectible : MonoBehaviour, ICollectible
 {
@@ -7,10 +8,27 @@ public class RottenWheatCollectible : MonoBehaviour, ICollectible
    // [SerializeField] private float _movementDecreaseSpeed;
    // [SerializeField] private float _resetSlowDuration;
 
+   [SerializeField] private PlayerStateUI _playerStateUI;
 
-   public void Collect()
+   private RectTransform _playerBoosterTransform;
+   private Image _playerBoosterImage;
+
+    private void Awake()
+    {
+        _playerBoosterTransform = _playerStateUI.GetBoosterSlowTransform;
+        _playerBoosterImage = _playerBoosterTransform.GetComponent<Image>();
+    }
+
+
+
+    public void Collect()
    {  
     _playerController.SetMovementSpeed(_wheatDesignSO.IncreaseDecreaseMultiplier, _wheatDesignSO.ResetBoostDuration);
+    
+    _playerStateUI.PlayBoostersUIAnimations(_playerBoosterTransform, _playerBoosterImage, _playerStateUI.GetRottenBoosterImage, 
+    _wheatDesignSO.ActiveSprite, _wheatDesignSO.PassiveSprite, _wheatDesignSO.ActiveWheatSprite, _wheatDesignSO.PassiveWheatSprite, _wheatDesignSO.ResetBoostDuration);
+    
+    
     Destroy(gameObject);
 
    }

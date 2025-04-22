@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public event Action OnplayerJumped;
+    public event Action<PlayerState> OnplayerStateChanged;
     
     [Header("References")]
     [SerializeField] private Transform _orientationTransform;
@@ -52,9 +53,6 @@ public class PlayerController : MonoBehaviour
         _startingMovementSpeed = _movementSpeed;
         _startingJumpForce = _jumpForce;
     }
-
-    
-
     private void Update()
     {
         SetInputs();
@@ -111,6 +109,7 @@ public class PlayerController : MonoBehaviour
         if(newState != currentState)
         {
             _stateController.ChangeState(newState);
+            OnplayerStateChanged?.Invoke(newState);
         }
     }
     private void ResetJumping()
