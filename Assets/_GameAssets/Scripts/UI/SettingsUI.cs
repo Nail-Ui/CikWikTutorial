@@ -41,24 +41,26 @@ public class SettingsUI : MonoBehaviour
    {
     
     GameManager.Instance.ChangeGameState(GameState.Pause);
+    AudioManager.Instance.Play(SoundType.ButtonClickSound);
+    
     _blackBackgroundObject.SetActive(true);
     _settingsPopUpObject.SetActive(true);
 
     _blackBackGroundImage.DOFade(0.8f, _animationDuration).SetEase(Ease.Linear);
     _settingsPopUpObject.transform.DOScale(1.5f, _animationDuration).SetEase(Ease.OutBack);
 
-
    }
 
    private void OnResumeButtonClicked()
    {
-     _blackBackGroundImage.DOFade(0f, _animationDuration).SetEase(Ease.Linear);
-     _settingsPopUpObject.transform.DOScale(0f, _animationDuration).SetEase(Ease.OutExpo).OnComplete(() =>
-     {
-       GameManager.Instance.ChangeGameState(GameState.Resume);
-       _blackBackgroundObject.SetActive(false);
-       _settingsPopUpObject.SetActive(false);
-
-     });
+      AudioManager.Instance.Play(SoundType.ButtonClickSound);
+      
+      _blackBackGroundImage.DOFade(0f, _animationDuration).SetEase(Ease.Linear);
+      _settingsPopUpObject.transform.DOScale(0f, _animationDuration).SetEase(Ease.OutExpo).OnComplete(() =>
+      {
+        GameManager.Instance.ChangeGameState(GameState.Resume); 
+        _blackBackgroundObject.SetActive(false);
+        _settingsPopUpObject.SetActive(false);
+      });
    }
 }

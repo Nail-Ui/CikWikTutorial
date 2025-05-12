@@ -82,12 +82,12 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKeyDown(_slideKey))
         { 
             _isSliding = true;
-            Debug.Log("Player Sliding");
+            //Debug.Log("Player Sliding");
         }
         else if(Input.GetKeyDown(_movementKey))
         {
             _isSliding = false;
-            Debug.Log("Player Moving!");
+            //Debug.Log("Player Moving!");
         }
 
         else if(Input.GetKey(_jumpKey) && _canJump && IsGrounded())
@@ -95,6 +95,8 @@ public class PlayerController : MonoBehaviour
             _canJump = false;
             SetPlayerJumping();
             Invoke(nameof(ResetJumping), _jumpCooldown);
+            AudioManager.Instance.Play(SoundType.JumpSound);
+            //Debug.Log("Player Jumping");
         }
 
     }
